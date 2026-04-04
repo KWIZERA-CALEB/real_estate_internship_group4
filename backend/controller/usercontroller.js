@@ -1,4 +1,4 @@
-import User from "../tables/userstable.js";
+import User from "../tables/usertable.js";
 
 const createUser = async (req, res) => {
 
