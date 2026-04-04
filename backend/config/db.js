@@ -22,4 +22,4 @@ async function conn() {
     
 }
 
-export default conn;
+export { sequelize, conn };
