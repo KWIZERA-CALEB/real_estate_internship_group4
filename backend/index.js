@@ -1,6 +1,9 @@
 import express from 'express';
 import { conn, sequelize } from './config/db.js';
 import properties from './tables/propertiestable.js';   
+import User from './tables/usertable.js';
+import './tables/foreignkeys.js'; 
+
 const app = express();
 
 app.listen(3000, () => {
