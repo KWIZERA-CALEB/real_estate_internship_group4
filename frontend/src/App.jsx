@@ -7,6 +7,11 @@ function App() {
   const [response, setResponse] = useState("");
   const [users, setUsers] = useState([]);
 
+  const [properties, setProperties] = useState([]);
+  const [selectedPropertyId, setSelectedPropertyId] = useState("");
+  const [selectedProperty, setSelectedProperty] = useState(null);
+  const [propertyMessage, setPropertyMessage] = useState("");
+
   function changeName(e) {
     setName(e.target.value);
   }
@@ -22,7 +27,6 @@ function App() {
   async function submitForm(e) {
     e.preventDefault(); //prevents page from refreshing when we submit
 
-    // use fetch to call api
     const response = await fetch("http://localhost:3000/api/users", {
       method: "POST",
       headers: {
@@ -36,8 +40,11 @@ function App() {
     });
 
     const data = await response.json();
-
     setResponse(data.message);
+    setName("");
+    setEmail("");
+    setPassword("");
+    getAllUsers();
   }
 
   async function getAllUsers() {
@@ -49,16 +56,73 @@ function App() {
     });
 
     const data = await response.json();
-
     setUsers(data.users);
-
-    console.log("all users", data);
   }
 
+  async function getAllProperties() {
+    const response = await fetch("http://localhost:3000/api/properties/all", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    setProperties(data.properties || []);
+  }
+
+  async function fetchProperty(id) {
+    if (!id) {
+      setPropertyMessage("Please provide a property ID.");
+      return;
+    }
+
+    const response = await fetch(`http://localhost:3000/api/properties/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      setSelectedProperty(data.property);
+      setPropertyMessage("");
+    } else {
+      setSelectedProperty(null);
+      setPropertyMessage(data.error || "Property not found.");
+    }
+  }
+
+  async function getPropertyById(e) {
+    e.preventDefault();
+    fetchProperty(selectedPropertyId);
+  }
+
+  async function deleteProperty(id) {
+    const response = await fetch(`http://localhost:3000/api/properties/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      setPropertyMessage(data.message);
+      getAllProperties();
+      if (selectedProperty?.id === id) {
+        setSelectedProperty(null);
+      }
+    } else {
+      setPropertyMessage(data.error || "Failed to delete property.");
+    }
+  }
 
   useEffect(() => {
     getAllUsers();
-  }, [])
+    getAllProperties();
+  }, []);
 
   return (
     <div>
@@ -80,16 +144,64 @@ function App() {
           type="text"
           value={password}
           onChange={changePassword}
-          placeholder="password"
+          placeholder="Password"
         />
-
         <button type="submit">Signup</button>
       </form>
 
       <h1>List of users</h1>
       {users.map((user) => (
-        <p>{user.name}</p>
+        <p key={user.id}>{user.name}</p>
       ))}
+
+      <hr />
+
+      <h1>Property management</h1>
+      <button type="button" onClick={getAllProperties}>
+        Refresh Properties
+      </button>
+      <p>{propertyMessage}</p>
+
+      <form onSubmit={getPropertyById}>
+        <input
+          type="number"
+          value={selectedPropertyId}
+          onChange={(e) => setSelectedPropertyId(e.target.value)}
+          placeholder="Property ID"
+        />
+        <button type="submit">Get Property</button>
+      </form>
+
+      {selectedProperty && (
+        <div>
+          <h2>Selected Property</h2>
+          <p>ID: {selectedProperty.id}</p>
+          <p>Title: {selectedProperty.title}</p>
+          <p>Price: {selectedProperty.price}</p>
+          <p>Description: {selectedProperty.description}</p>
+          <p>Location: {selectedProperty.location}</p>
+          <p>Image: {selectedProperty.image}</p>
+          <p>User ID: {selectedProperty.user_id}</p>
+          <button type="button" onClick={() => deleteProperty(selectedProperty.id)}>
+            Delete Selected Property
+          </button>
+        </div>
+      )}
+
+      <h2>All Properties</h2>
+      <ul>
+        {properties.map((property) => (
+          <li key={property.id}>
+            <strong>{property.title}</strong> - ${property.price} - {property.location}
+            <button type="button" onClick={() => fetchProperty(property.id)}>
+              View
+            </button>
+            <button type="button" onClick={() => deleteProperty(property.id)}>
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
