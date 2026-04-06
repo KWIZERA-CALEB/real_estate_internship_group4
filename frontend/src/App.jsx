@@ -1,52 +1,58 @@
 import { useState } from "react"
 
-function App() {
-  // javascript code
-  const [name, setName] = useState('caleb')
-  const [age, setAge] = useState(30)
-  const [email, setEmail] = useState('caleb@gmail.com')
-  const [password, setPassword] = useState('we are here')
+function  App() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [response, setResponse] = useState('')
 
 
-
-  function changeName(a) {
-    setName(a.target.value)
+  function changeName(e) {
+    setName(e.target.value)
   }
+
 
   function changeEmail(e) {
     setEmail(e.target.value)
   }
 
-  function changePassword(event) {
-    setPassword(event.target.value)
-  }
-
-  function showUsWhatIsInform(e) {
-    e.preventDefault()
+  function changePassword(e) {
+    setPassword(e.target.value)
   }
 
 
-  // here goes all html code
+  async function submitForm(e) {
+    e.preventDefault() //prevents page from refreshing when we submit
+
+    // use fetch to call api
+    const response = await fetch('http://localhost:3000/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password
+      })
+    })
+
+    const data = await response.json()
+
+
+    setResponse(data.message)
+  }
+
   return (
     <div>
-      Hello
-      <h1>Hello  {name}</h1>
-      <p>Am {age} years old</p>
-      <button onClick={changeName}>Change Name</button>
-
-      {/* form */}
-      <form onSubmit={showUsWhatIsInform}>
-        <input type="text" value={name} onChange={changeName} placeholder="name" />
-        <input type="text" value={email} onChange={changeEmail} placeholder="email" />
+      <h4>Response: {response}</h4>
+      <form onSubmit={submitForm}>
+        <input type="text" value={name} onChange={changeName} placeholder="Your name" />
+        <input type="text" value={email} onChange={changeEmail} placeholder="Your email" />
         <input type="text" value={password} onChange={changePassword} placeholder="password" />
-        <button type="submit">Show us what is from the form</button>
+
+        <button type="submit">Signup</button>
       </form>
-
-
-      <p>Email: {email}</p>
-      <p>Password: {password}</p>
-      <p>Name: {name}</p>
-
     </div>
   )
 }

@@ -6,6 +6,10 @@ const createUser = async (req, res) => {
     const { name, email, password } = req.body
 
 
+    console.log('data sent from frontend', name)
+    console.log('data sent from frontend', password)
+    console.log('data sent from frontend', email)
+
     try {
         // create user
 
@@ -20,7 +24,8 @@ const createUser = async (req, res) => {
             message: "User created"
         })
     } catch(error) {
-        console.log('failed to add user')
+        console.log('failed to add user', error)
+        res.status(500).json({ error: 'Failed to create user' })
     }
 }
 

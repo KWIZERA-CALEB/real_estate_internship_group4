@@ -4,10 +4,16 @@ import properties from './tables/propertiestable.js';
 import User from './tables/usertable.js';
 import './tables/foreignkeys.js'; 
 import userroutes from './routes/userroutes.js';
+import cors from 'cors'
 
 
 const app = express();
 
+
+// allow frontend to make request using cors
+app.use(cors({
+    origin: 'http://localhost:5173'
+}))
 
 // to allow sending data using json
 app.use(express.json())
