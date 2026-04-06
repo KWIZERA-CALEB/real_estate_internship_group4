@@ -29,6 +29,21 @@ const createUser = async (req, res) => {
     }
 }
 
+
+async function getAllUsers(req, res) {
+    try {
+        const users = await User.findAll()
+
+        res.status(200).json({
+            users: users
+        })
+    } catch(error) {
+        console.log('failed to get all users')
+    }   
+}
+
+
 export {
-    createUser
+    createUser,
+    getAllUsers
 }
