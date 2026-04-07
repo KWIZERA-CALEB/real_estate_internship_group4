@@ -72,25 +72,13 @@ function App() {
   }
 
   async function fetchProperty(id) {
-    if (!id) {
-      setPropertyMessage("Please provide a property ID.");
-      return;
-    }
-
-    const response = await fetch(`http://localhost:3000/api/properties/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await response.json();
-    if (response.ok) {
-      setSelectedProperty(data.property);
+    const property = properties.find(p => p.id == id);
+    if (property) {
+      setSelectedProperty(property);
       setPropertyMessage("");
     } else {
       setSelectedProperty(null);
-      setPropertyMessage(data.error || "Property not found.");
+      setPropertyMessage("Property not found.");
     }
   }
 
@@ -100,22 +88,10 @@ function App() {
   }
 
   async function deleteProperty(id) {
-    const response = await fetch(`http://localhost:3000/api/properties/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await response.json();
-    if (response.ok) {
-      setPropertyMessage(data.message);
-      getAllProperties();
-      if (selectedProperty?.id === id) {
-        setSelectedProperty(null);
-      }
-    } else {
-      setPropertyMessage(data.error || "Failed to delete property.");
+    setProperties(properties.filter(p => p.id != id));
+    setPropertyMessage("Property deleted");
+    if (selectedProperty?.id === id) {
+      setSelectedProperty(null);
     }
   }
 
