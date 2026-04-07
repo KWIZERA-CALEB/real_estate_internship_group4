@@ -6,6 +6,7 @@ function App() {
   const [password, setPassword] = useState("");
   const [response, setResponse] = useState("");
   const [users, setUsers] = useState([]);
+  const [properties, setProperties] = useState([]);
 
   function changeName(e) {
     setName(e.target.value);
@@ -60,6 +61,27 @@ function App() {
     getAllUsers();
   }, [])
 
+
+   async function getAllProperties() {
+    const response = await fetch("http://localhost:3000/api/properties/all", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    setProperties(data.properties);
+
+    console.log("all properties", data);
+  }
+
+
+  useEffect(() => {
+    getAllProperties();
+  }, [])
+
   return (
     <div>
       <h4>Response: {response}</h4>
@@ -92,6 +114,11 @@ function App() {
       ))}
     </div>
   );
-}
 
+   <h1>List of proterty</h1>
+      {users.map((properties) => (
+        <p>{property.name}</p>
+      ))}
+    
+}
 export default App;
