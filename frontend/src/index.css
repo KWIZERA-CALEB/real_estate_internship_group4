@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  background: #f0f2f5;
+  min-height: 100vh;
+  padding: 0;
+  color: #1a1a1a;
+  line-height: 1.6;
+}
+
+@layer components {
+  .form-input {
+    @apply w-full px-6 py-4 text-base leading-7 border border-gray-300/60 rounded-lg focus:outline-none focus:ring-2 ring-teal-400/30 focus:border-teal-400 focus:ring-4 transition duration-300 bg-white text-gray-900 placeholder-gray-500 shadow-sm hover:border-teal-400 hover:shadow-md;
+  }
+
+  .form-button {
+    @apply px-8 py-4 text-base font-bold bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition duration-300 cursor-pointer shadow-md hover:shadow-lg;
+  }
+
+  .section-card {
+    @apply bg-gradient-to-br from-white to-gray-50 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-gray-200/80 hover:shadow-2xl transition duration-300;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold text-gray-900 mb-8;
+  }
+
+  .user-item {
+    @apply bg-gradient-to-r from-white to-gray-50 p-5 rounded-2xl border-2 border-gray-200 transition-all duration-300 hover:border-[#1877F2] hover:shadow-lg hover:bg-white hover:scale-105 cursor-pointer;
+  }
+
+  .property-item {
+    @apply bg-white border border-gray-300 rounded-lg p-6 mb-4 shadow-sm hover:shadow-lg hover:border-[#1877F2] transition duration-200 cursor-pointer;
+  }
+
+  .property-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+}
+
+/* Header Styles */
+#root > div > div > div:first-child {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+  border-radius: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 1.5rem 0 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+#root > div > div > div:first-child h1 {
+  color: #1877F2;
+  font-weight: 800;
+  font-size: 2.5rem;
+  letter-spacing: -0.02em;
+}
+
+#root > div > div > div:first-child p {
+  color: #65676b;
+  font-weight: 400;
+}
+
+/* Main container */
+#root > div {
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+#root > div > div {
+  padding: 2rem 1rem;
+}
