@@ -1,209 +1,38 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import Notfound from "./pages/Notfound";
+import Login from "./pages/Login";
+import SignupPage from "./pages/SignupPage";
+import PropertiesPage from "./pages/PropertyPage";
+import SinglePropertyPage from "./pages/SinglePropertyPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [response, setResponse] = useState("");
-  const [users, setUsers] = useState([]);
-
-  const [properties, setProperties] = useState([]);
-  const [selectedPropertyId, setSelectedPropertyId] = useState("");
-  const [selectedProperty, setSelectedProperty] = useState(null);
-  const [propertyMessage, setPropertyMessage] = useState("");
-
-  function changeName(e) {
-    setName(e.target.value);
-  }
-
-  function changeEmail(e) {
-    setEmail(e.target.value);
-  }
-
-  function changePassword(e) {
-    setPassword(e.target.value);
-  }
-
-  async function submitForm(e) {
-    e.preventDefault(); //prevents page from refreshing when we submit
-
-    const response = await fetch("http://localhost:3000/api/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: name,
-        email: email,
-        password: password,
-      }),
-    });
-
-    const data = await response.json();
-    setResponse(data.message);
-    setName("");
-    setEmail("");
-    setPassword("");
-    getAllUsers();
-  }
-
-  async function getAllUsers() {
-    const response = await fetch("http://localhost:3000/api/users/all", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await response.json();
-    setUsers(data.users);
-  }
-
-  async function getAllProperties() {
-    const response = await fetch("http://localhost:3000/api/properties/all", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await response.json();
-    setProperties(data.properties || []);
-  }
-
-  async function fetchProperty(id) {
-    if (!id) {
-      setPropertyMessage("Please provide a property ID.");
-      return;
-    }
-
-    const response = await fetch(`http://localhost:3000/api/properties/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await response.json();
-    if (response.ok) {
-      setSelectedProperty(data.property);
-      setPropertyMessage("");
-    } else {
-      setSelectedProperty(null);
-      setPropertyMessage(data.error || "Property not found.");
-    }
-  }
-
-  async function getPropertyById(e) {
-    e.preventDefault();
-    fetchProperty(selectedPropertyId);
-  }
-
-  async function deleteProperty(id) {
-    const response = await fetch(`http://localhost:3000/api/properties/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await response.json();
-    if (response.ok) {
-      setPropertyMessage(data.message);
-      getAllProperties();
-      if (selectedProperty?.id === id) {
-        setSelectedProperty(null);
-      }
-    } else {
-      setPropertyMessage(data.error || "Failed to delete property.");
-    }
-  }
-
-  useEffect(() => {
-    getAllUsers();
-    getAllProperties();
-  }, []);
-
+const App = () => {
   return (
     <div>
-      <h4>Response: {response}</h4>
-      <form onSubmit={submitForm}>
-        <input
-          type="text"
-          value={name}
-          onChange={changeName}
-          placeholder="Your name"
+      <Routes>
+        <Route path="*" element={<Navigate to="/properties" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route
+          path="/properties"
+          element={
+            <ProtectedRoute>
+              <PropertiesPage />
+            </ProtectedRoute>
+          }
         />
-        <input
-          type="text"
-          value={email}
-          onChange={changeEmail}
-          placeholder="Your email"
+        <Route
+          path="/properties/:id"
+          element={
+            <ProtectedRoute>
+              <SinglePropertyPage />
+            </ProtectedRoute>
+          }
         />
-        <input
-          type="text"
-          value={password}
-          onChange={changePassword}
-          placeholder="Password"
-        />
-        <button type="submit">Signup</button>
-      </form>
-
-      <h1>List of users</h1>
-      {users.map((user) => (
-        <p key={user.id}>{user.name}</p>
-      ))}
-
-      <hr />
-
-      <h1>Property management</h1>
-      <button type="button" onClick={getAllProperties}>
-        Refresh Properties
-      </button>
-      <p>{propertyMessage}</p>
-
-      <form onSubmit={getPropertyById}>
-        <input
-          type="number"
-          value={selectedPropertyId}
-          onChange={(e) => setSelectedPropertyId(e.target.value)}
-          placeholder="Property ID"
-        />
-        <button type="submit">Get Property</button>
-      </form>
-
-      {selectedProperty && (
-        <div>
-          <h2>Selected Property</h2>
-          <p>ID: {selectedProperty.id}</p>
-          <p>Title: {selectedProperty.title}</p>
-          <p>Price: {selectedProperty.price}</p>
-          <p>Description: {selectedProperty.description}</p>
-          <p>Location: {selectedProperty.location}</p>
-          <p>Image: {selectedProperty.image}</p>
-          <p>User ID: {selectedProperty.user_id}</p>
-          <button type="button" onClick={() => deleteProperty(selectedProperty.id)}>
-            Delete Selected Property
-          </button>
-        </div>
-      )}
-
-      <h2>All Properties</h2>
-      <ul>
-        {properties.map((property) => (
-          <li key={property.id}>
-            <strong>{property.title}</strong> - ${property.price} - {property.location}
-            <button type="button" onClick={() => fetchProperty(property.id)}>
-              View
-            </button>
-            <button type="button" onClick={() => deleteProperty(property.id)}>
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;

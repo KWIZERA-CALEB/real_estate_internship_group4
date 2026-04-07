@@ -13,7 +13,7 @@ const app = express();
 
 // allow frontend to make request using cors
 app.use(cors({
-    origin: 'http://localhost:5173'
+    origin: '*'
 }))
 
 // to allow sending data using json

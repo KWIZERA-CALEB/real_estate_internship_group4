@@ -21,7 +21,7 @@ const properties = sequelize.define("properties", {
     },
     description :
     {
-        type : DataTypes.STRING,
+        type : DataTypes.STRING(255),
         allowNull : false
 },
     image :{
