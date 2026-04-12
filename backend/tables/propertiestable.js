@@ -11,25 +11,37 @@ const properties = sequelize.define("properties", {
     title :{
         type : DataTypes.STRING,
         allowNull : false
-
-,
     },
     price :{
-        type : DataTypes.INTEGER,
+        type : DataTypes.DECIMAL(10, 2),
         allowNull : false
-
     },
-    description :
-    {
-        type : DataTypes.STRING,
-        allowNull : false
-},
-    image :{
-        type : DataTypes.STRING,
+    description :{
+        type : DataTypes.TEXT,
         allowNull : false
     },
     location :{
         type : DataTypes.STRING,
+        allowNull : false
+    },
+    image :{
+        type : DataTypes.TEXT,
+        allowNull : true
+    },
+    bedrooms: {
+        type : DataTypes.INTEGER,
+        allowNull : true,
+        defaultValue: 0
+    },
+    bathrooms: {
+        type : DataTypes.INTEGER,
+        allowNull : true,
+        defaultValue: 0
+    },
+    area: {
+        type : DataTypes.DECIMAL(10, 2),
+        allowNull : true,
+        defaultValue: 0
     },
     user_id: {
         type: DataTypes.INTEGER,
