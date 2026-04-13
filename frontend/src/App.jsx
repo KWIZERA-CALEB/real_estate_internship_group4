@@ -1,54 +1,80 @@
-import { useState } from "react"
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import Navbar from './components/Navbar';
+import ProtectedRoute from './components/ProtectedRoute';
 
-function App() {
-  // javascript code
-  const [name, setName] = useState('caleb')
-  const [age, setAge] = useState(30)
-  const [email, setEmail] = useState('caleb@gmail.com')
-  const [password, setPassword] = useState('we are here')
+// Pages
+import Home from './pages/Home';
+import Login from './pages/shared/login';
+import Signup from './pages/shared/Signup';
+import Dashboard from './pages/managment/Dashboard';
+import PropertiesList from './pages/renters/PropertiesList';
+import PropertyDetail from './pages/renters/PropertyDetail';
+import NewProperty from './pages/user/NewProperty';
+import EditProperty from './pages/user/EditProperty';
 
+function AppContent() {
+    const { loading } = useAuth();
 
+    if (loading) {
+        return (
+            <div className="loading">
+                <div className="spinner"></div>
+            </div>
+        );
+    }
 
-  function changeName(a) {
-    setName(a.target.value)
-  }
+    return (
+        <>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/properties" element={<PropertiesList />} />
+                <Route path="/properties/:id" element={<PropertyDetail />} />
+                
+                {/* Protected Routes */}
+                <Route 
+                    path="/dashboard" 
+                    element={
+                        <ProtectedRoute>
+                            <Dashboard />
+                        </ProtectedRoute>
+                    } 
+                />
+                <Route 
+                    path="/new-property" 
+                    element={
+                        <ProtectedRoute>
+                            <NewProperty />
+                        </ProtectedRoute>
+                    } 
+                />
+                <Route 
+                    path="/edit-property/:id" 
+                    element={
+                        <ProtectedRoute>
+                            <EditProperty />
+                        </ProtectedRoute>
+                    } 
+                />
 
-  function changeEmail(e) {
-    setEmail(e.target.value)
-  }
-
-  function changePassword(event) {
-    setPassword(event.target.value)
-  }
-
-  function showUsWhatIsInform(e) {
-    e.preventDefault()
-  }
-
-
-  // here goes all html code
-  return (
-    <div>
-      Hello
-      <h1>Hello  {name}</h1>
-      <p>Am {age} years old</p>
-      <button onClick={changeName}>Change Name</button>
-
-      {/* form */}
-      <form onSubmit={showUsWhatIsInform}>
-        <input type="text" value={name} onChange={changeName} placeholder="name" />
-        <input type="text" value={email} onChange={changeEmail} placeholder="email" />
-        <input type="text" value={password} onChange={changePassword} placeholder="password" />
-        <button type="submit">Show us what is from the form</button>
-      </form>
-
-
-      <p>Email: {email}</p>
-      <p>Password: {password}</p>
-      <p>Name: {name}</p>
-
-    </div>
-  )
+                {/* Fallback */}
+                <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+        </>
+    );
 }
 
-export default App
+function App() {
+    return (
+        <Router>
+            <AuthProvider>
+                <AppContent />
+            </AuthProvider>
+        </Router>
+    );
+}
+
+export default App;

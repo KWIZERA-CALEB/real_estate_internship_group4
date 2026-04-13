@@ -1,21 +1,26 @@
 import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
     {
-        Hostname: "127.0.0.1",
-        username: "root",
-        password: "Alwayscool12345",
-        database: "group4db",
+        host: process.env.DB_HOST,
         dialect: "mysql",
-        port: 3306
+        port: process.env.DB_PORT
     }
-
 )
 
 async function conn() {
     try {
         await sequelize.authenticate();
         console.log("Connection has been established successfully.");
+        // Sync all models with database
+        await sequelize.sync({ alter: true });
+        console.log("Database tables synchronized successfully.");
     } catch (error) {
         console.error("Unable to connect to the database:", error);
     }
