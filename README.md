@@ -1,10 +1,10 @@
-# Real Estate Property Management System
+Real Estate Property Management System
 
 A full-stack web application for managing real estate properties with user authentication, property listing, and advanced CRUD operations. Built with modern JavaScript stack.
 
-## ✨ Features
+Features
 
-### 🔐 User Authentication
+User Authentication
 - **JWT-based Authentication**: Secure token-based authentication
 - **Password Hashing**: Bcrypt password encryption (10 salt rounds)
 - **User Registration**: Create account with email validation
@@ -12,7 +12,7 @@ A full-stack web application for managing real estate properties with user authe
 - **Profile Management**: View and update user profile information
 - **Protected Routes**: Frontend and backend route protection with authentication middleware
 
-### 🏠 Property Management
+Property Management
 - **Property Listing**: Browse all available properties with advanced filtering
 - **Property Details**: Comprehensive property information pages
 - **Create Properties**: Add new properties with rich details
@@ -26,53 +26,53 @@ A full-stack web application for managing real estate properties with user authe
   - Detailed descriptions
   - Image URLs
 
-### 🔍 Search & Filter
-- **Text Search**: Search by title, location, or description
-- **Property Type Filter**: Filter by property type
-- **Status Filter**: Filter by availability status
-- **Combined Filters**: Apply multiple filters simultaneously
+Search & Filter
+- Text Search**: Search by title, location, or description
+- Property Type Filter**: Filter by property type
+- Status Filter**: Filter by availability status
+- Combined Filters**: Apply multiple filters simultaneously
 
-### 👤 User Dashboard
-- **Owner Information**: View and edit profile details
-- **Property Statistics**: See total properties, available count, and portfolio value
-- **Property Management**: Manage all owned properties from one place
-- **Quick Actions**: Edit or delete properties easily
+User Dashboard
+- Owner Information**: View and edit profile details
+- Property Statistics**: See total properties, available count, and portfolio value
+- Property Management**: Manage all owned properties from one place
+- Quick Actions**: Edit or delete properties easily
 
-### 📱 Responsive UI/UX
-- **Mobile-First Design**: Fully responsive across all devices
-- **Modern Interface**: Clean, professional design with smooth animations
-- **Icon Integration**: Lucide icons for visual clarity
-- **Accessibility**: Semantic HTML and proper ARIA labels
-- **Loading States**: Loading spinners and states for better UX
-- **Error Handling**: Comprehensive error messages and alerts
-- **Success Feedback**: Confirmation messages for user actions
+Responsive UI/UX
+- Mobile-First Design**: Fully responsive across all devices
+- Modern Interface**: Clean, professional design with smooth animations
+- Icon Integration**: Lucide icons for visual clarity
+- Accessibility**: Semantic HTML and proper ARIA labels
+- Loading States**: Loading spinners and states for better UX
+- Error Handling**: Comprehensive error messages and alerts
+- Success Feedback**: Confirmation messages for user actions
 
-## 🛠️ Tech Stack
+Tech Stack
 
-### Backend
-- **Runtime**: Node.js 18+
-- **Framework**: Express.js 5.x (ES modules)
-- **Database**: MySQL with Sequelize ORM
-- **Authentication**: JWT (jsonwebtoken), bcryptjs
-- **Middleware**: CORS, Body Parser
-- **Environment**: dotenv for configuration
-- **Development**: Nodemon for auto-restart
+Backend
+- Runtime**: Node.js 18+
+- Framework**: Express.js 5.x (ES modules)
+- Database**: MySQL with Sequelize ORM
+- Authentication**: JWT (jsonwebtoken), bcryptjs
+- Middleware**: CORS, Body Parser
+- Environment**: dotenv for configuration
+- Development**: Nodemon for auto-restart
 
-### Frontend
-- **Framework**: React 19.x
-- **Build Tool**: Vite 7.x
-- **Routing**: React Router DOM 7.x
-- **HTTP Client**: Axios
-- **Icons**: Lucide React
-- **Styling**: Custom CSS with CSS variables
-- **Development**: ESLint for code quality
+Frontend
+- Framework**: React 19.x
+- Build Tool**: Vite 7.x
+- Routing**: React Router DOM 7.x
+- HTTP Client**: Axios
+- Icons**: Lucide React
+- Styling**: Custom CSS with CSS variables
+- Development**: ESLint for code quality
 
-### Database
-- **System**: MySQL 8.x
-- **ORM**: Sequelize 6.x
-- **Associations**: User-Property one-to-many relationship
+Database
+- System: MySQL 8.x
+- ORM: Sequelize 6.x
+- Associations: User-Property one-to-many relationship
 
-## 📋 Project Structure
+Project Structure
 
 ```
 real_estate_internship_group4/
@@ -127,66 +127,66 @@ real_estate_internship_group4/
 └── README.md
 ```
 
-## 🚀 Getting Started
+Getting Started
 
-### Prerequisites
+ Prerequisites
 - Node.js 18 or higher
 - npm or yarn
 - MySQL 8.0 or higher
 - Git
 
-### Installation
+ Installation
 
-#### 1. Clone the repository
+ 1. Clone the repository
 ```bash
 git clone <repository-url>
 cd real_estate_internship_group4
 ```
 
-#### 2. Setup Backend
+ 2. Setup Backend
 
 ```bash
 cd backend
 
-# Install dependencies
+ Install dependencies
 npm install
 
-# Create .env file with your configuration
-# Example:
-# DB_HOST=127.0.0.1
-# DB_USER=root
-# DB_PASSWORD=your_password
-# DB_NAME=group4db
-# DB_PORT=3306
-# JWT_SECRET=your_secret_key
-# JWT_EXPIRE=7d
-# PORT=3000
+ Create .env file with your configuration
+ Example:
+ DB_HOST=127.0.0.1
+ DB_USER=root
+ DB_PASSWORD=your_password
+ DB_NAME=group4db
+ DB_PORT=3306
+ JWT_SECRET=your_secret_key
+ JWT_EXPIRE=7d
+ PORT=3000
 
-# Start development server (requires nodemon)
+ Start development server (requires nodemon)
 npm run dev
 ```
 
-#### 3. Setup Frontend
+3. Setup Frontend
 
 ```bash
 cd ../frontend
 
-# Install dependencies
+ Install dependencies
 npm install
 
-# Start Vite dev server
+ Start Vite dev server
 npm run dev
 ```
 
 The application will be available at:
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:3000/api
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:3000/api
 
-## 📚 API Documentation
+API Documentation
 
-### Authentication Endpoints
+Authentication Endpoints
 
-#### Register User
+ Register User
 ```
 POST /api/auth/register
 Content-Type: application/json
@@ -206,7 +206,7 @@ Response: 201 Created
 }
 ```
 
-#### Login User
+Login User
 ```
 POST /api/auth/login
 Content-Type: application/json
@@ -224,7 +224,7 @@ Response: 200 OK
 }
 ```
 
-#### Get User Profile (Protected)
+ Get User Profile (Protected)
 ```
 GET /api/auth/profile
 Authorization: Bearer {token}
@@ -235,7 +235,7 @@ Response: 200 OK
 }
 ```
 
-#### Update User Profile (Protected)
+ Update User Profile (Protected)
 ```
 PUT /api/auth/profile
 Authorization: Bearer {token}
@@ -250,9 +250,9 @@ Content-Type: application/json
 Response: 200 OK
 ```
 
-### Property Endpoints
+ Property Endpoints
 
-#### Get All Properties
+ Get All Properties
 ```
 GET /api/properties/all
 
@@ -268,7 +268,7 @@ Response: 200 OK
 }
 ```
 
-#### Get Property by ID
+ Get Property by ID
 ```
 GET /api/properties/:id
 
@@ -278,7 +278,7 @@ Response: 200 OK
 }
 ```
 
-#### Create Property (Protected)
+ Create Property (Protected)
 ```
 POST /api/properties
 Authorization: Bearer {token}
@@ -299,7 +299,7 @@ Content-Type: application/json
 Response: 201 Created
 ```
 
-#### Update Property (Protected - Owner Only)
+ Update Property (Protected - Owner Only)
 ```
 PUT /api/properties/:id
 Authorization: Bearer {token}
@@ -314,7 +314,7 @@ Content-Type: application/json
 Response: 200 OK
 ```
 
-#### Delete Property (Protected - Owner Only)
+ Delete Property (Protected - Owner Only)
 ```
 DELETE /api/properties/:id
 Authorization: Bearer {token}
@@ -322,41 +322,34 @@ Authorization: Bearer {token}
 Response: 200 OK
 ```
 
-## 🔒 Security Features
+Security Features
 
-- **JWT Tokens**: Secure token-based authentication with 7-day expiration
-- **Password Hashing**: Bcrypt with 10 salt rounds
-- **CORS**: Configured for frontend-backend communication
-- **Protected Routes**: Middleware-based protection for sensitive endpoints
-- **Authorization Checks**: Verify user ownership before allowing mutations
-- **SQL Injection Prevention**: Sequelize parameterized queries
-- **Environment Variables**: Sensitive data stored in .env
+- JWT Tokens: Secure token-based authentication with 7-day expiration
+- Password Hashing: Bcrypt with 10 salt rounds
+- CORS: Configured for frontend-backend communication
+- Protected Routes: Middleware-based protection for sensitive endpoints
+- Authorization Checks: Verify user ownership before allowing mutations
+- SQL Injection Prevention: Sequelize parameterized queries
+- Environment Variables: Sensitive data stored in .env
 
-## 📱 Responsive Design Breakpoints
+Responsive Design Breakpoints
 
-- **Desktop**: 1200px+ (full features)
-- **Tablet**: 768px - 1199px (optimized layout)
-- **Mobile**: below 768px (single column, touch-friendly)
+- Desktop: 1200px+ (full features)
+- Tablet: 768px - 1199px (optimized layout)
+- Mobile: below 768px (single column, touch-friendly)
 
-## 🎨 UI Components
+UI Components
 
-- **Navigation Bar**: Sticky header with auth state display
-- **Property Cards**: Responsive grid with hover effects
-- **Form Components**: Validated input fields with error messages
-- **Modals**: Overlay modals for confirmations
-- **Alerts**: Success, error, warning, and info notifications
-- **Loading States**: Spinner animations for async operations
-- **Badges**: Status indicators for properties
+- Navigation Bar: Sticky header with auth state display
+- Property Cards: Responsive grid with hover effects
+- Form Components: Validated input fields with error messages
+- Modals: Overlay modals for confirmations
+- Alerts: Success, error, warning, and info notifications
+- Loading States: Spinner animations for async operations
+- Badges: Status indicators for properties
 
-## ⚡ Performance Optimizations
 
-- **Image Optimization**: Lazy loading with fallback images
-- **Code Splitting**: Router-based code splitting
-- **Caching**: Browser caching for static assets
-- **Efficient Queries**: Optimized database queries with includes
-- **CSS Variables**: Dynamic theming with CSS variables
-
-## 🐛 Error Handling
+Error Handling
 
 - **Validation**: Server-side input validation
 - **Error Messages**: User-friendly error messages
@@ -364,9 +357,9 @@ Response: 200 OK
 - **Try-Catch Blocks**: Comprehensive error catching
 - **Fallback Images**: Default images for broken URLs
 
-## 📦 Build & Deployment
+Build & Deployment
 
-### Build for Production
+Build for Production
 
 **Backend**:
 ```bash
@@ -381,7 +374,7 @@ npm run build
 npm run preview  # Test production build
 ```
 
-## 🔄 Database Schema
+Database Schema
 
 ### Users Table
 ```sql
@@ -419,7 +412,7 @@ CREATE TABLE properties (
 );
 ```
 
-## 🤝 Contributing
+Contributing
 
 Contributions are welcome! Please follow these steps:
 1. Fork the repository
@@ -428,7 +421,7 @@ Contributions are welcome! Please follow these steps:
 4. Push to branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
+License
 
 This project is licensed under the ISC License.
 
@@ -436,11 +429,11 @@ This project is licensed under the ISC License.
 
 - Group 4 - Real Estate Internship Project
 
-## 📞 Support
+Support
 
 For support, email support@realestate.local or create an issue in the repository.
 
-## 🗺️ Roadmap
+Roadmap
 
 - [ ] Advanced filtering (price range, area range)
 - [ ] Favorites/Wishlist system
@@ -454,5 +447,3 @@ For support, email support@realestate.local or create an issue in the repository
 - [ ] Payment integration
 
 ---
-
-**Happy coding! 🚀**
